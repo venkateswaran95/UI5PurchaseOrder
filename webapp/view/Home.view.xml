@@ -1,0 +1,52 @@
+<mvc:View
+	controllerName="ZMyPurchaseOrder.controller.Home"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns="sap.m">
+	<l:VerticalLayout
+		class="sapUiContentPadding"
+		width="100%">
+		<l:content>
+			<Label text="Purchase Order" labelFor="productInput"/>
+			<Input
+				id="productInput"
+				type="Text"
+				placeholder="Enter PO Number..."
+				width="450px"
+				showSuggestion="true"
+				showValueHelp="true"
+				valueHelpRequest="handleValueHelp"
+				suggestionItems="{/ZPurchaseOrder}" >
+				<suggestionItems>
+					<core:Item text="{ebeln}" />
+					
+				</suggestionItems>
+			</Input>
+		</l:content>
+	</l:VerticalLayout>
+		<VBox fitContainer="true">
+			<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZPurchaseOrder" persistencyKey="SmartFilter_Explored" basicSearchFieldName="lifnr" enableBasicSearch="true" >
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="bukrs">
+					<smartFilterBar:defaultFilterValues>
+							<smartFilterBar:SelectOption low="0001">
+							</smartFilterBar:SelectOption>
+						</smartFilterBar:defaultFilterValues>
+					</smartFilterBar:ControlConfiguration>
+				</smartFilterBar:controlConfiguration>	
+				<!-- layout data used to make the table growing but the filter bar fixed -->
+				<smartFilterBar:layoutData>
+					<FlexItemData shrinkFactor="0"/>
+				</smartFilterBar:layoutData>
+			</smartFilterBar:SmartFilterBar>
+			<smartTable:SmartTable id="LineItemsSmartTable" entitySet="ZPurchaseOrder" smartFilterId="smartFilterBar" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Line Items" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding">
+				<!-- layout data used to make the table growing but the filter bar fixed -->
+				<smartTable:layoutData>
+					<FlexItemData growFactor="1" baseSize="0%"/>
+				</smartTable:layoutData>
+			</smartTable:SmartTable>
+		</VBox>
+</mvc:View>
